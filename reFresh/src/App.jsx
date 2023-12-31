@@ -1,33 +1,31 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [count2, setCount2] = useState(0)
+
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Create a post</h1>
+      <input></input>
+      <button>Post</button>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+          add to count {count}
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+
+        <button onClick={() => setCount2((count2) => count2 + 1)}>
+          add to 2nd count  {count2}
+        </button>
+        <p className="read-the-docs">
+          Lets create a react app using vite, and then connect it to a node backend with CRUD functionality
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
