@@ -1,31 +1,36 @@
 import { useState } from 'react'
+import axios from 'axios'
 
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [count2, setCount2] = useState(0)
+  const [content, setContent] = useState('')
 
-
+  const handleCreatePost = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/posts', { content});
+      console.log('Post created:', response.data);
+    } catch(error) {
+      console.error( 'Error creating post:', error)
+    }
+  }
+ 
   return (
     <>
       <div>
       </div>
       <h1>Create a post</h1>
-      <input></input>
-      <button>Post</button>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          add to count {count}
-        </button>
-
-        <button onClick={() => setCount2((count2) => count2 + 1)}>
-          add to 2nd count  {count2}
-        </button>
+      <input
+      type="text"
+      value={content}
+      onChange={(e) => setContent(e.target.value)}
+      placeholder="Enter post content"></input>
+      <button onClick={handleCreatePost}> Create Post</button>
+      
         <p className="read-the-docs">
           Lets create a react app using vite, and then connect it to a node backend with CRUD functionality
         </p>
-      </div>
+      
     </>
   )
 }

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const Post = require('./models/Post');
 
 const connectionString = process.env.MONGODB_URI;
 
@@ -24,31 +25,36 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 db.once('open', () => {
     console.log('Connected to MongoDB')
 });
-// Post model
-const Post = mongoose.model('Post', { title: String });
 
-app.get('/posts', async (req, res) => {
-    const posts = await Post.find();
-    res.json(posts);
+
+// endpoint for posting to database
+app.post('/api/posts', async (req,res) => {
+try{
+const { content } = req.body;
+// same as const content = req.body.content
+const newPost = new Post({ content });
+await newPost.save();
+res.status(201).json(newPost);
+} catch (error) {
+ console.error(error);
+ res.status(500).json({ error: "Internal Server Error"});
+}    
 });
 
-app.post('/posts', async (req, res) =>{
-    const newPost = new Post(req.body);
-    await newPost.save();
-    res.json(newPost);
+
+app.get('api/posts', async (req, res) => {
+    try { 
+        const posts = await Post.find();
+        res.status(200).json(posts);
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
 });
 
-app.put('posts/:id' , async (req, res) => {
-const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true });
-res.json(updatedPost);
-});
 
-app.delete('/posts/:id', async (req, res) => {
-    await Post.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Post deleted successfully'});
-});
 
 app.listen(PORT, () => {
-    console.log('Server is running on port ${PORT}');
+    console.log(`Server is running on port ${PORT}`);
 });
 
