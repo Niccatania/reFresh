@@ -42,17 +42,17 @@ res.status(201).json(newPost);
 });
 
 
-app.get('api/posts', async (req, res) => {
+app.get('/api/posts', async (req, res) => {
     try { 
         const posts = await Post.find();
+        console.log("hello", posts)
         res.status(200).json(posts);
     } catch(error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' })
     }
+    
 });
-
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
