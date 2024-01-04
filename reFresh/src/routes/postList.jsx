@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+import { Text } from '@chakra-ui/react'
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -50,7 +51,7 @@ return (
             {posts.map((post) => (
             <li key={post._id}>
 
-                <h3>{post.content}</h3>
+                <Text fontsize='md'>{post.content}</Text>
                 <button onClick={() => handleDeletePost(post._id)}>Delete</button>  
                 <input
                 type='text'
