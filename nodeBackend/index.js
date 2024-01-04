@@ -41,7 +41,7 @@ res.status(201).json(newPost);
 }    
 });
 
-
+// Retrieving posts
 app.get('/api/posts', async (req, res) => {
     try { 
         const posts = await Post.find();
@@ -52,6 +52,43 @@ app.get('/api/posts', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' })
     }
     
+});
+
+// delete post
+app.delete('/api/posts/:postId', async (req, res) => {
+    const postId = req.params.postId;
+
+    try{
+        const deletedPost = await Post.findByIdAndDelete(postId);
+
+        if(!deletedPost) {
+            return res.status(404).jsob({ error: 'Post not found'});
+        }
+
+        res.json({message: 'Post deleted succesfully', deletedPost });
+
+    } catch (error) {
+        console.error('Error deleting post', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+app.put('/api/posts/:postId', async (req, res) => {
+const postId = req.params.postId;
+const { content } =req.body;
+
+try{
+    const updatedPost = await Post.findByIdAndUpdate(postId, { content }, { new:true });
+
+    if (!updatedPost) {
+        return res.status(404).json({ error: 'Post not found' });        
+    }
+    
+    res.json({ message: 'Post updated succesfully' , updatedPost });
+} catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).json({ error: 'Internal server error'});
+}
 });
 
 app.listen(PORT, () => {
