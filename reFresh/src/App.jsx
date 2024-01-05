@@ -11,15 +11,16 @@ function App() {
        
       </div>
       
-      <div>
-      <a href={`/postList`}> View Posts</a>
-      <div>
+      <div class="space">
+      <a  href={`/postList`}> View Posts</a>
+      
 
       </div>
-      <a href={`/create`}> Create Posts</a>
+      <div class="space">
+      <a  href={`/create`}> Create Posts</a>
       </div>
         <p className="read-the-docs">
-          Lets create a react app using vite, and then connect it to a node backend with CRUD functionality
+         A react app created using vite. Connected to a Mongo database, Node server, and uses express for routing. Some bonus technology is react router, and Chakra UI.
         </p>
       
     </>

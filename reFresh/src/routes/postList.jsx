@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Text } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -47,8 +48,11 @@ const handleUpdatedPost = async (postId) => {
 return (
     <div>
         <h1> Posts</h1>
+        <Card>
+        <CardBody>
         <ul>
             {posts.map((post) => (
+               
             <li key={post._id}>
 
                 <Text fontsize='md'>{post.content}</Text>
@@ -61,9 +65,13 @@ return (
                 />
                 <button onClick={() => handleUpdatedPost(post._id)}>Update Post </button>
             </li> 
+           
              
             ))}
         </ul>
+        </CardBody>
+        </Card>
+
     </div>
 );
 }
